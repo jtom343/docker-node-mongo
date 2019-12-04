@@ -1,15 +1,29 @@
+# We use version 3 here.
 version: '3'
+
+# Our List of Services.  App: and Mongo:, you can call them whatever you want.  
 services:
+# indentation is very important.  App is the service name
   app:
     container_name: docker-node-mongo
+    # if fails, always restarts
     restart: always
+    # rebuilds from dockerfile.  Looks in current dir to find it
     build: .
+    # exposed on these ports
     ports:
       - '80:3000'
-    links:
-      - mongo
+    # If you don't have a named network, need to manually link them.
+    # but Docker-Compose should automatically do this for you.  
+    # This is legacy feature and not needed.
+    # links:
+    #   - mongo
+
+  # this is another service, called Mongo
   mongo:
     container_name: mongo
+    # this is pulled from dockerhub, so this is the image name.
     image: mongo
+    # expose ports
     ports:
       - '27017:27017'
